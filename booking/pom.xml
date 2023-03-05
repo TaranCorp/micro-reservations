@@ -14,8 +14,8 @@
     <artifactId>booking</artifactId>
 
     <modules>
-        <module></module>
         <module>domain</module>
+        <module>app</module>
     </modules>
 
 </project>

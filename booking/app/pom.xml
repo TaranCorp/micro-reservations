@@ -9,13 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>domain</artifactId>
+    <artifactId>app</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.taranco</groupId>
-            <artifactId>commons</artifactId>
+            <artifactId>domain</artifactId>
         </dependency>
     </dependencies>
-
 </project>
