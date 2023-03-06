@@ -20,11 +20,7 @@ class ReservationCreator {
 
         if (bookingEvent.state() == BookingEvent.State.CREATED) {
             log.info("Start of reservation for booking id: {}", bookingEvent.bookingId().toString());
-            reserveRooms(bookingEvent);
+            reservationEventPublisher.publish(bookingEvent);
         }
-    }
-
-    private void reserveRooms(BookingEvent bookingEvent) {
-        reservationEventPublisher.publish(bookingEvent);
     }
 }
