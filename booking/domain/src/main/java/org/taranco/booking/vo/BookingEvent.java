@@ -13,7 +13,7 @@ import java.util.Set;
 public class BookingEvent implements DomainEvent {
 
     public enum State {
-        CREATED, SENT, UPDATED
+        CREATED, SENT
     }
 
     private final State state;
