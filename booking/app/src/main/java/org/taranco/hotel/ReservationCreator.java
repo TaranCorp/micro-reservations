@@ -7,10 +7,10 @@ import org.taranco.booking.vo.BookingEvent;
 class ReservationCreator {
     private static final Logger log = LoggerFactory.getLogger(ReservationCreator.class);
 
-    private final ReservationEventPublisher publisher;
+    private final ReservationEventPublisher reservationEventPublisher;
 
-    ReservationCreator(ReservationEventPublisher publisher) {
-        this.publisher = publisher;
+    ReservationCreator(ReservationEventPublisher reservationEventPublisher) {
+        this.reservationEventPublisher = reservationEventPublisher;
     }
 
     void publishReservationRequest(BookingEvent bookingEvent) {
@@ -25,6 +25,6 @@ class ReservationCreator {
     }
 
     private void reserveRooms(BookingEvent bookingEvent) {
-        publisher.publish(bookingEvent);
+        reservationEventPublisher.publish(bookingEvent);
     }
 }
