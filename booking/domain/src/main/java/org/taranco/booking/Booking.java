@@ -60,11 +60,12 @@ class Booking {
         this.status = status;
     }
 
-    Booking reserve(String hotelName) {
+    Booking reserve(String hotelName, Money price) {
         if (hotelName == null || hotelName.isBlank()) {
             throw new IllegalArgumentException("Hotel id cannot be null");
         }
         changeStatus(BookingStatus.RESERVED);
+        this.price = price;
         this.hotelName = hotelName;
         return this;
     }
@@ -74,13 +75,13 @@ class Booking {
         rooms = Collections.emptySet();
         hotelId = null;
         hotelName = null;
+        price = null;
         return this;
     }
 
-    Booking pay(Money price, Instant paymentDate) {
+    Booking pay(Instant paymentDate) {
         changeStatus(BookingStatus.PAID);
         this.paymentDate = paymentDate;
-        this.price = price;
         return this;
     }
 
@@ -104,10 +105,6 @@ class Booking {
 
     private void addRooms(Set<Room> providedRooms) {
         this.rooms.addAll(providedRooms);
-    }
-
-    Set<Room> rooms() {
-        return unmodifiableSet(rooms);
     }
 
     BookingSnapshot getSnapshot() {
