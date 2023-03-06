@@ -2,7 +2,7 @@ package org.taranco.hotel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.taranco.booking.vo.BookingEvent;
+import org.taranco.booking.dto.BookingCreatedEvent;
 
 class ReservationCreator {
     private static final Logger log = LoggerFactory.getLogger(ReservationCreator.class);
@@ -13,14 +13,12 @@ class ReservationCreator {
         this.reservationEventPublisher = reservationEventPublisher;
     }
 
-    void publishReservationRequest(BookingEvent bookingEvent) {
-        if (bookingEvent == null) {
+    void publishReservationRequest(BookingCreatedEvent bookingCreatedEvent) {
+        if (bookingCreatedEvent == null) {
             throw new IllegalArgumentException("Cannot process null booking event");
         }
 
-        if (bookingEvent.state() == BookingEvent.State.CREATED) {
-            log.info("Start of reservation for booking id: {}", bookingEvent.bookingId().toString());
-            reservationEventPublisher.publish(bookingEvent);
-        }
+        log.info("Start of reservation for booking id: {}", bookingCreatedEvent.bookingId().toString());
+        reservationEventPublisher.publish(bookingCreatedEvent);
     }
 }
