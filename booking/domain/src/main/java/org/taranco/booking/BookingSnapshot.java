@@ -1,6 +1,7 @@
 package org.taranco.booking;
 
 import org.taranco.BookingId;
+ import org.taranco.CustomerId;
 import org.taranco.HotelId;
 import org.taranco.vo.DateRange;
 import org.taranco.vo.Money;
@@ -13,6 +14,7 @@ import java.util.Set;
 class BookingSnapshot {
 
     private final BookingId bookingId;
+    private final CustomerId customerId;
     private final HotelId hotelId;
     private final String hotelName;
     private final Set<Room> rooms = new HashSet<>();
@@ -22,8 +24,9 @@ class BookingSnapshot {
     private final Money price;
     private final BookingStatus status;
 
-    BookingSnapshot(BookingId bookingId, HotelId hotelId, String hotelName, Set<Room> rooms, DateRange bookingPeriod, Instant bookingDate, Instant paymentDate, Money price, BookingStatus status) {
+    BookingSnapshot(BookingId bookingId, CustomerId customerId, HotelId hotelId, String hotelName, Set<Room> rooms, DateRange bookingPeriod, Instant bookingDate, Instant paymentDate, Money price, BookingStatus status) {
         this.bookingId = bookingId;
+        this.customerId = customerId;
         this.hotelId = hotelId;
         this.hotelName = hotelName;
         this.rooms.addAll(rooms);
@@ -32,6 +35,10 @@ class BookingSnapshot {
         this.paymentDate = paymentDate;
         this.price = price;
         this.status = status;
+    }
+
+    public CustomerId customerId() {
+        return customerId;
     }
 
     public BookingId bookingId() {

@@ -1,6 +1,7 @@
-package org.taranco.booking.vo;
+package org.taranco.booking.dto;
 
 import org.taranco.BookingId;
+import org.taranco.CustomerId;
 import org.taranco.DomainEvent;
 import org.taranco.HotelId;
 import org.taranco.booking.Room;
@@ -10,43 +11,30 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-public class BookingEvent implements DomainEvent {
-
-    public enum State {
-        CREATED, SENT
-    }
-
-    private final State state;
+public class BookingCreatedEvent implements DomainEvent {
     private final Instant occurredOn;
     private final BookingId bookingId;
+    private final CustomerId customerId;
     private final HotelId hotelId;
     private final Set<Room> rooms = new HashSet<>();
     private final DateRange bookingPeriod;
 
-    public BookingEvent(State state, BookingId bookingId, HotelId hotelId, DateRange bookingPeriod, Set<Room> rooms) {
+    public BookingCreatedEvent(BookingId bookingId, CustomerId customerId, HotelId hotelId, DateRange bookingPeriod, Set<Room> rooms) {
         this.bookingId = bookingId;
         this.hotelId = hotelId;
         this.bookingPeriod = bookingPeriod;
+        this.customerId = customerId;
         this.occurredOn = Instant.now();
-        this.state = state;
         this.rooms.addAll(rooms);
     }
 
-    public BookingEvent(State state, BookingEvent bookingEvent) {
-        this(state, bookingEvent.bookingId, bookingEvent.hotelId, bookingEvent.bookingPeriod, bookingEvent.rooms);
-    }
-
     @Override
-    public Instant getOccurredOn() {
-        return occurredOn;
-    }
-
-    public State state() {
-        return state;
-    }
-
     public Instant occurredOn() {
         return occurredOn;
+    }
+
+    public CustomerId customerId() {
+        return customerId;
     }
 
     public BookingId bookingId() {

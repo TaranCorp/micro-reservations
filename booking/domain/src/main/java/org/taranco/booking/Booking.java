@@ -1,6 +1,7 @@
 package org.taranco.booking;
 
 import org.taranco.BookingId;
+import org.taranco.CustomerId;
 import org.taranco.HotelId;
 import org.taranco.vo.DateRange;
 import org.taranco.vo.Money;
@@ -11,12 +12,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import static java.util.Collections.unmodifiableSet;
-
 class Booking {
     static Booking restore(BookingSnapshot snapshot) {
         return new Booking(
                 snapshot.bookingId(),
+                snapshot.customerId(),
                 snapshot.hotelId(),
                 snapshot.hotelName(),
                 snapshot.rooms(),
@@ -29,6 +29,7 @@ class Booking {
     }
 
     private final BookingId bookingId;
+    private final CustomerId customerId;
     private HotelId hotelId;
     private String hotelName;
     private Set<Room> rooms = new HashSet<>();
@@ -38,18 +39,20 @@ class Booking {
     private Money price;
     private BookingStatus status;
 
-    Booking(BookingId bookingId, DateRange bookingPeriod, HotelId hotelId, Set<Room> rooms) {
+    Booking(BookingId bookingId, CustomerId customerId, DateRange bookingPeriod, HotelId hotelId, Set<Room> rooms) {
         if (hotelId == null) {
             throw new IllegalArgumentException("Hotel id cannot be null");
         }
         addRooms(rooms);
+        this.customerId = customerId;
         this.bookingId = bookingId;
         this.bookingPeriod = bookingPeriod;
         this.status = BookingStatus.PENDING;
     }
 
-    Booking(BookingId bookingId, HotelId hotelId, String hotelName, Set<Room> rooms, DateRange bookingPeriod, Instant bookingDate, Instant paymentDate, Money price, BookingStatus status) {
+    Booking(BookingId bookingId, CustomerId customerId, HotelId hotelId, String hotelName, Set<Room> rooms, DateRange bookingPeriod, Instant bookingDate, Instant paymentDate, Money price, BookingStatus status) {
         this.bookingId = bookingId;
+        this.customerId = customerId;
         this.hotelId = hotelId;
         this.hotelName = hotelName;
         this.rooms = rooms;
@@ -110,6 +113,7 @@ class Booking {
     BookingSnapshot getSnapshot() {
         return new BookingSnapshot(
                 bookingId,
+                customerId,
                 hotelId,
                 hotelName,
                 rooms,
