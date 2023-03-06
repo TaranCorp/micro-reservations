@@ -3,5 +3,5 @@ package org.taranco;
 import java.time.Instant;
 
 public interface DomainEvent {
-    Instant getOccurredOn();
+    Instant occurredOn();
 }
