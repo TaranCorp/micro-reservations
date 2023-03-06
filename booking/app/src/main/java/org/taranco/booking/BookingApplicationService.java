@@ -7,7 +7,7 @@ import org.taranco.vo.DateRange;
 import java.util.Set;
 
 public interface BookingApplicationService {
-    void createBooking(DateRange bookingPeriod, HotelId hotelId, Set<Room> rooms);
+    Booking createBooking(DateRange bookingPeriod, HotelId hotelId, Set<Room> rooms);
 
     Booking trackBooking(BookingId bookingId);
 }
