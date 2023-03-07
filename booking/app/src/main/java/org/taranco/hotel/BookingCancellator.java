@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.taranco.booking.dto.BookingCancellingEvent;
 
-class BookingCancellator {
+public class BookingCancellator {
     private static final Logger log = LoggerFactory.getLogger(BookingCancellator.class);
 
     private final BookingCancellationEventPublisher bookingCancellationPublisher;
@@ -13,7 +13,7 @@ class BookingCancellator {
         this.bookingCancellationPublisher = bookingCancellationPublisher;
     }
 
-    void publishCancellingBookingEvent(BookingCancellingEvent event) {
+    public void publishCancellingBookingEvent(BookingCancellingEvent event) {
         if (event == null) {
             throw new IllegalArgumentException("BookingCancellingEvent cannot be null");
         }

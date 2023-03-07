@@ -7,6 +7,7 @@ import org.taranco.CustomerId;
 import org.taranco.DomainEventPublisher;
 import org.taranco.HotelId;
 import org.taranco.booking.dto.BookingCreatedEvent;
+import org.taranco.hotel.ReservationCreator;
 import org.taranco.vo.DateRange;
 
 import java.util.Set;
@@ -16,23 +17,24 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
     private static final Logger log = LoggerFactory.getLogger(BookingApplicationServiceImpl.class);
 
     private final BookingRepository bookingRepository;
-    private final DomainEventPublisher publisher;
+    private final ReservationCreator reservationCreator;
 
     public BookingApplicationServiceImpl(BookingRepository bookingRepository,
-                                         DomainEventPublisher publisher) {
+                                         ReservationCreator reservationCreator) {
         this.bookingRepository = bookingRepository;
-        this.publisher = publisher;
+        this.reservationCreator = reservationCreator;
     }
 
     @Override
     public Booking createBooking(DateRange bookingPeriod, CustomerId customerId, HotelId hotelId, Set<Room> rooms) {
         final Booking persistedBooking = bookingRepository.save(new Booking(
-                        new BookingId(UUID.randomUUID()), customerId, bookingPeriod, hotelId, rooms)
+                new BookingId(UUID.randomUUID()), customerId, bookingPeriod, hotelId, rooms)
         );
         log.info("Booking with id: {} was created", persistedBooking.getSnapshot().bookingId().toString());
 
-        BookingSnapshot persistedBookingSnapshot = persistedBooking.getSnapshot();
-        publisher.publish(new BookingCreatedEvent(
+        final BookingSnapshot persistedBookingSnapshot = persistedBooking.getSnapshot();
+
+        reservationCreator.publishReservationRequest(new BookingCreatedEvent(
                 persistedBookingSnapshot.bookingId(),
                 persistedBookingSnapshot.customerId(),
                 persistedBookingSnapshot.hotelId(),
@@ -40,7 +42,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
                 persistedBookingSnapshot.rooms()
         ));
 
-        log.info("BookingCreatedEvent with id: {} was published", persistedBooking.getSnapshot().bookingId().toString());
+        log.info("BookingCreatedEvent with id: {} was published", persistedBooking.getSnapshot().bookingId().id().toString());
         return persistedBooking;
     }
 

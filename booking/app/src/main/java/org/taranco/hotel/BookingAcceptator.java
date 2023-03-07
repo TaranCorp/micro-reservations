@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.taranco.booking.dto.BookingPaidEvent;
 
-class BookingAcceptator {
+public class BookingAcceptator {
     private static final Logger log = LoggerFactory.getLogger(BookingAcceptator.class);
 
     private final BookingApproveEventPublisher bookingApproveEventPublisher;
@@ -13,7 +13,7 @@ class BookingAcceptator {
         this.bookingApproveEventPublisher = bookingApproveEventPublisher;
     }
 
-    void publishBookingApproveEvent(BookingPaidEvent event) {
+    public void publishBookingApproveEvent(BookingPaidEvent event) {
         if (event == null) {
             throw new IllegalArgumentException("BookingPaidEvent cannot be null");
         }

@@ -2,21 +2,24 @@ package org.taranco.booking;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.taranco.DomainEventPublisher;
 import org.taranco.NotFoundException;
 import org.taranco.booking.dto.BookingCancellingEvent;
 import org.taranco.booking.dto.BookingPaidEvent;
 import org.taranco.booking.dto.PaymentResponse;
+import org.taranco.hotel.BookingAcceptator;
+import org.taranco.hotel.BookingCancellator;
 
 public class PaymentResponseListenerImpl implements PaymentResponseListener {
     private static final Logger log = LoggerFactory.getLogger(PaymentResponseListenerImpl.class);
 
     private final BookingRepository bookingRepository;
-    private final DomainEventPublisher publisher;
+    private final BookingAcceptator bookingAcceptator;
+    private final BookingCancellator bookingCancellator;
 
-    PaymentResponseListenerImpl(BookingRepository bookingRepository, DomainEventPublisher publisher) {
+    PaymentResponseListenerImpl(BookingRepository bookingRepository, BookingAcceptator bookingAcceptator, BookingCancellator bookingCancellator) {
         this.bookingRepository = bookingRepository;
-        this.publisher = publisher;
+        this.bookingAcceptator = bookingAcceptator;
+        this.bookingCancellator = bookingCancellator;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class PaymentResponseListenerImpl implements PaymentResponseListener {
         final BookingSnapshot paidBookingSnapshot = bookingRepository.save(paidBooking).getSnapshot();
 
         log.info("Publishing BookingPaidEvent with id: {}", paidBookingSnapshot.bookingId().id().toString());
-        publisher.publish(new BookingPaidEvent(
+        bookingAcceptator.publishBookingApproveEvent(new BookingPaidEvent(
                 paidBookingSnapshot.bookingId(),
                 paidBookingSnapshot.hotelId(),
                 paidBookingSnapshot.rooms()
@@ -50,7 +53,7 @@ public class PaymentResponseListenerImpl implements PaymentResponseListener {
         final BookingSnapshot cancellingBookingSnapshot = bookingRepository.save(cancellingBooking).getSnapshot();
 
         log.error("Publishing BookingCancellingEvent of booking with id: {}", cancellingBookingSnapshot.bookingId().id().toString());
-        publisher.publish(new BookingCancellingEvent(
+        bookingCancellator.publishCancellingBookingEvent(new BookingCancellingEvent(
                 cancellingBookingSnapshot.bookingId(),
                 cancellingBookingSnapshot.hotelId(),
                 cancellingBookingSnapshot.rooms()

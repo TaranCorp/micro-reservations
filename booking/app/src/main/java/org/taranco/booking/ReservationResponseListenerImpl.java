@@ -2,20 +2,20 @@ package org.taranco.booking;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.taranco.DomainEventPublisher;
 import org.taranco.NotFoundException;
 import org.taranco.booking.dto.BookingReservedEvent;
 import org.taranco.booking.dto.ReservationResponse;
+import org.taranco.payment.PaymentCreator;
 
 public class ReservationResponseListenerImpl implements ReservationResponseListener {
     private static final Logger log = LoggerFactory.getLogger(ReservationResponseListenerImpl.class);
 
     private final BookingRepository bookingRepository;
-    private final DomainEventPublisher publisher;
+    private final PaymentCreator paymentCreator;
 
-    public ReservationResponseListenerImpl(BookingRepository bookingRepository, DomainEventPublisher publisher) {
+    public ReservationResponseListenerImpl(BookingRepository bookingRepository, PaymentCreator paymentCreator) {
         this.bookingRepository = bookingRepository;
-        this.publisher = publisher;
+        this.paymentCreator = paymentCreator;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ReservationResponseListenerImpl implements ReservationResponseListe
         final BookingSnapshot bookingSnapshot = bookingRepository.save(reservedBooking).getSnapshot();
 
         log.info("Publishing BookingReservedEvent with id: {}", bookingSnapshot.bookingId().id().toString());
-        publisher.publish(new BookingReservedEvent(
+        paymentCreator.publishPaymentRequest(new BookingReservedEvent(
                 bookingSnapshot.bookingId(), bookingSnapshot.price(), bookingSnapshot.customerId()
         ));
     }
