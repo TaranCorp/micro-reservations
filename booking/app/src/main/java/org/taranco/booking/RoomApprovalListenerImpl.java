@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.taranco.NotFoundException;
 import org.taranco.booking.dto.ApprovalResponse;
 
-class RoomApprovalListenerImpl implements RoomApprovalListener {
+public class RoomApprovalListenerImpl implements RoomApprovalListener {
     private static final Logger log = LoggerFactory.getLogger(RoomApprovalListenerImpl.class);
 
     private final BookingRepository bookingRepository;

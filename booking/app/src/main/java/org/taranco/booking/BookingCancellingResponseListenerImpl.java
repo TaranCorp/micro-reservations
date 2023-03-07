@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.taranco.NotFoundException;
 import org.taranco.booking.dto.CancellationResponse;
 
-class BookingCancellingResponseListenerImpl implements BookingCancellingResponseListener {
+public class BookingCancellingResponseListenerImpl implements BookingCancellingResponseListener {
     private static final Logger log = LoggerFactory.getLogger(BookingCancellingResponseListenerImpl.class);
 
     private final BookingRepository bookingRepository;

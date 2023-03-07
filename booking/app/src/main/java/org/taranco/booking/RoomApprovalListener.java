@@ -2,6 +2,6 @@ package org.taranco.booking;
 
 import org.taranco.booking.dto.ApprovalResponse;
 
-interface RoomApprovalListener {
+public interface RoomApprovalListener {
     void approvalCompleted(ApprovalResponse approvalResponse);
 }
