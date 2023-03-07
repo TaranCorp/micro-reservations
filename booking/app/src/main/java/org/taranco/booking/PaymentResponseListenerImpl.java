@@ -34,7 +34,7 @@ public class PaymentResponseListenerImpl implements PaymentResponseListener {
         final BookingSnapshot paidBookingSnapshot = bookingRepository.save(paidBooking).getSnapshot();
 
         log.info("Publishing BookingPaidEvent with id: {}", paidBookingSnapshot.bookingId().id().toString());
-        bookingAcceptator.publishBookingApproveEvent(new BookingPaidEvent(
+        bookingAcceptator.publishBookingApproveRequest(new BookingPaidEvent(
                 paidBookingSnapshot.bookingId(),
                 paidBookingSnapshot.hotelId(),
                 paidBookingSnapshot.rooms()
@@ -53,7 +53,7 @@ public class PaymentResponseListenerImpl implements PaymentResponseListener {
         final BookingSnapshot cancellingBookingSnapshot = bookingRepository.save(cancellingBooking).getSnapshot();
 
         log.error("Publishing BookingCancellingEvent of booking with id: {}", cancellingBookingSnapshot.bookingId().id().toString());
-        bookingCancellator.publishCancellingBookingEvent(new BookingCancellingEvent(
+        bookingCancellator.publishCancellingBookingRequest(new BookingCancellingEvent(
                 cancellingBookingSnapshot.bookingId(),
                 cancellingBookingSnapshot.hotelId(),
                 cancellingBookingSnapshot.rooms()

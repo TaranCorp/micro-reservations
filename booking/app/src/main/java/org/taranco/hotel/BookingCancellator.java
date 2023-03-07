@@ -13,7 +13,7 @@ public class BookingCancellator {
         this.bookingCancellationPublisher = bookingCancellationPublisher;
     }
 
-    public void publishCancellingBookingEvent(BookingCancellingEvent event) {
+    public void publishCancellingBookingRequest(BookingCancellingEvent event) {
         if (event == null) {
             throw new IllegalArgumentException("BookingCancellingEvent cannot be null");
         }

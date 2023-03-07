@@ -32,6 +32,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
         final Booking persistedBooking = bookingRepository.save(new Booking(
                 new BookingId(UUID.randomUUID()), command.customerId(), command.bookingPeriod(), command.hotelId(), command.rooms())
         );
+
         log.info("Booking with id: {} was created", persistedBooking.getSnapshot().bookingId().toString());
 
         final BookingSnapshot persistedBookingSnapshot = persistedBooking.getSnapshot();
@@ -45,6 +46,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
         ));
 
         log.info("BookingCreatedEvent with id: {} was published", persistedBooking.getSnapshot().bookingId().id().toString());
+
         return new CreateBookingResponse(persistedBookingSnapshot.bookingId());
     }
 

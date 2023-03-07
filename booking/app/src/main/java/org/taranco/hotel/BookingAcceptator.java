@@ -13,7 +13,7 @@ public class BookingAcceptator {
         this.bookingApproveEventPublisher = bookingApproveEventPublisher;
     }
 
-    public void publishBookingApproveEvent(BookingPaidEvent event) {
+    public void publishBookingApproveRequest(BookingPaidEvent event) {
         if (event == null) {
             throw new IllegalArgumentException("BookingPaidEvent cannot be null");
         }
