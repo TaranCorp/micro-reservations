@@ -6,8 +6,11 @@ import org.taranco.NotFoundException;
 import org.taranco.booking.dto.BookingCancellingEvent;
 import org.taranco.booking.dto.BookingPaidEvent;
 import org.taranco.booking.dto.PaymentResponse;
+import org.taranco.booking.dto.RoomHolder;
 import org.taranco.hotel.BookingAcceptator;
 import org.taranco.hotel.BookingCancellator;
+
+import java.util.stream.Collectors;
 
 public class PaymentResponseListenerImpl implements PaymentResponseListener {
     private static final Logger log = LoggerFactory.getLogger(PaymentResponseListenerImpl.class);
@@ -37,7 +40,7 @@ public class PaymentResponseListenerImpl implements PaymentResponseListener {
         bookingAcceptator.publishBookingApproveRequest(new BookingPaidEvent(
                 paidBookingSnapshot.bookingId(),
                 paidBookingSnapshot.hotelId(),
-                paidBookingSnapshot.rooms()
+                paidBookingSnapshot.rooms().stream().map(room -> new RoomHolder(room.roomId(), room.vacancies())).collect(Collectors.toSet())
         ));
     }
 
@@ -56,7 +59,7 @@ public class PaymentResponseListenerImpl implements PaymentResponseListener {
         bookingCancellator.publishCancellingBookingRequest(new BookingCancellingEvent(
                 cancellingBookingSnapshot.bookingId(),
                 cancellingBookingSnapshot.hotelId(),
-                cancellingBookingSnapshot.rooms()
+                cancellingBookingSnapshot.rooms().stream().map(room -> new RoomHolder(room.roomId(), room.vacancies())).collect(Collectors.toSet())
         ));
     }
 }

@@ -3,7 +3,6 @@ package org.taranco.booking.dto;
 import org.taranco.BookingId;
 import org.taranco.DomainEvent;
 import org.taranco.HotelId;
-import org.taranco.booking.Room;
 
 import java.time.Instant;
 import java.util.HashSet;
@@ -13,9 +12,9 @@ public class BookingCancellingEvent implements DomainEvent {
     private final BookingId bookingId;
     private final Instant occurredOn;
     private final HotelId hotelId;
-    private final Set<Room> rooms = new HashSet<>();
+    private final Set<RoomHolder> rooms = new HashSet<>();
 
-    public BookingCancellingEvent(BookingId bookingId, HotelId hotelId, Set<Room> rooms) {
+    public BookingCancellingEvent(BookingId bookingId, HotelId hotelId, Set<RoomHolder> rooms) {
         this.bookingId = bookingId;
         this.occurredOn = Instant.now();
         this.hotelId = hotelId;
@@ -35,7 +34,7 @@ public class BookingCancellingEvent implements DomainEvent {
         return hotelId;
     }
 
-    public Set<Room> rooms() {
+    public Set<RoomHolder> rooms() {
         return rooms;
     }
 }

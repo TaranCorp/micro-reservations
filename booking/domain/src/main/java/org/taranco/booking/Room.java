@@ -4,7 +4,7 @@ import org.taranco.RoomId;
 
 import java.util.Objects;
 
-public class Room {
+class Room {
     static Room create(RoomId roomId, int vacancies) {
         return new Room(roomId, vacancies);
     }
@@ -21,6 +21,14 @@ public class Room {
         }
         this.roomId = roomId;
         this.vacancies = vacancies;
+    }
+
+    public RoomId roomId() {
+        return roomId;
+    }
+
+    public int vacancies() {
+        return vacancies;
     }
 
     @Override

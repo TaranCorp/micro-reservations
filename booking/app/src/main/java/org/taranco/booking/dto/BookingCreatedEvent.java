@@ -4,7 +4,6 @@ import org.taranco.BookingId;
 import org.taranco.CustomerId;
 import org.taranco.DomainEvent;
 import org.taranco.HotelId;
-import org.taranco.booking.Room;
 import org.taranco.vo.DateRange;
 
 import java.time.Instant;
@@ -16,10 +15,10 @@ public class BookingCreatedEvent implements DomainEvent {
     private final BookingId bookingId;
     private final CustomerId customerId;
     private final HotelId hotelId;
-    private final Set<Room> rooms = new HashSet<>();
+    private final Set<RoomHolder> rooms = new HashSet<>();
     private final DateRange bookingPeriod;
 
-    public BookingCreatedEvent(BookingId bookingId, CustomerId customerId, HotelId hotelId, DateRange bookingPeriod, Set<Room> rooms) {
+    public BookingCreatedEvent(BookingId bookingId, CustomerId customerId, HotelId hotelId, DateRange bookingPeriod, Set<RoomHolder> rooms) {
         this.bookingId = bookingId;
         this.hotelId = hotelId;
         this.bookingPeriod = bookingPeriod;
@@ -45,7 +44,7 @@ public class BookingCreatedEvent implements DomainEvent {
         return hotelId;
     }
 
-    public Set<Room> rooms() {
+    public Set<RoomHolder> rooms() {
         return rooms;
     }
 
