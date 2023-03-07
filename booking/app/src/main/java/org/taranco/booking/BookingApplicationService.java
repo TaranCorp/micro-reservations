@@ -1,14 +1,11 @@
 package org.taranco.booking;
 
 import org.taranco.BookingId;
-import org.taranco.CustomerId;
-import org.taranco.HotelId;
-import org.taranco.vo.DateRange;
-
-import java.util.Set;
+import org.taranco.booking.dto.CreateBookingCommand;
+import org.taranco.booking.dto.CreateBookingResponse;
 
 public interface BookingApplicationService {
-    Booking createBooking(DateRange bookingPeriod, CustomerId customerId, HotelId hotelId, Set<Room> rooms);
+    CreateBookingResponse createBooking(CreateBookingCommand command);
 
     Booking trackBooking(BookingId bookingId);
 }
