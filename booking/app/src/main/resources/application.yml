@@ -1,0 +1,4 @@
+topics:
+  reservation:
+    request:  hotel-reservation-request
+    response:  hotel-reservation-response

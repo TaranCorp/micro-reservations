@@ -1,15 +1,24 @@
 package org.taranco.vo;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class DateRange {
-    public static DateRange createFromNowTo(Instant to) {
+
+    @JsonCreator
+    public static DateRange createFromNowTo(@JsonProperty("to") Instant to) {
         return new DateRange(Instant.now(), to);
     }
 
-    public static DateRange create(Instant from, Instant to) {
+    @JsonCreator
+    public static DateRange create(
+            @JsonProperty("from") Instant from,
+            @JsonProperty("to") Instant to)
+    {
         return new DateRange(from, to);
     }
 
@@ -30,15 +39,15 @@ public class DateRange {
         this.to = to;
     }
 
-    public Instant from() {
+    public Instant getFrom() {
         return from;
     }
 
-    public Instant to() {
+    public Instant getTo() {
         return to;
     }
 
-    public long rangeBy(ChronoUnit unit) {
+    public long getRangeBy(ChronoUnit unit) {
         return unit.between(from, to);
     }
 

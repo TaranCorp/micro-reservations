@@ -11,11 +11,10 @@
 
     <artifactId>domain</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.taranco</groupId>
-            <artifactId>commons</artifactId>
-        </dependency>
-    </dependencies>
+    <packaging>pom</packaging>
 
+    <modules>
+        <module>core</module>
+        <module>app-service</module>
+    </modules>
 </project>

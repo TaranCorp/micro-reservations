@@ -6,4 +6,7 @@ public class CustomerId extends BaseId<UUID> {
     public CustomerId(UUID uuid) {
         super(uuid);
     }
+
+    public CustomerId() {
+    }
 }

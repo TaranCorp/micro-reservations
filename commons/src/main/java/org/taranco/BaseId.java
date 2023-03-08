@@ -5,6 +5,9 @@ import java.util.Objects;
 public abstract class BaseId<ID> {
     private ID id;
 
+    public BaseId() {
+    }
+
     public BaseId(ID id) {
         if (id == null) {
             throw new IllegalArgumentException("Provided id cannot be null");
@@ -12,7 +15,7 @@ public abstract class BaseId<ID> {
         this.id = id;
     }
 
-    public ID id() {
+    public ID getId() {
         return id;
     }
 
