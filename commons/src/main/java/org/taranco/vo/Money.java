@@ -1,5 +1,8 @@
 package org.taranco.vo;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
@@ -7,9 +10,8 @@ import java.util.Objects;
 public class Money {
     private final BigDecimal amount;
 
-    public static final Money ZERO = new Money(BigDecimal.ZERO);
-
-    public Money(BigDecimal amount) {
+    @JsonCreator
+    public Money(@JsonProperty("amount") BigDecimal amount) {
         if (amount == null) {
             throw new IllegalArgumentException("Money cannot be null");
         }

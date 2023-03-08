@@ -1,4 +1,4 @@
-package org.taranco.booking.config;
+package org.taranco.booking.messaging.publisher;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,14 +7,14 @@ import org.taranco.booking.dto.BookingCreatedEvent;
 import org.taranco.hotel.ReservationEventPublisher;
 
 @Component
-public class ReservationDomainEventPublisherImpl implements ReservationEventPublisher {
+class ReservationRequestRabbitPublisher implements ReservationEventPublisher {
 
     @Value("${topics.reservation.request}")
     private String reservationTopic;
 
     private final RabbitTemplate rabbitTemplate;
 
-    public ReservationDomainEventPublisherImpl(RabbitTemplate rabbitTemplate) {
+    public ReservationRequestRabbitPublisher(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
 
