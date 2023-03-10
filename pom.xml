@@ -23,6 +23,7 @@
     <modules>
         <module>booking</module>
         <module>commons</module>
+        <module>hotel</module>
     </modules>
 
     <dependencyManagement>
