@@ -15,7 +15,7 @@
 
     <modules>
         <module>booking-domain</module>
-        <module>booking-app</module>
+        <module>booking-infrastructure</module>
     </modules>
 
 </project>
