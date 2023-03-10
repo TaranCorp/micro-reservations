@@ -17,7 +17,10 @@ class ReservationResponseRabbitListener {
     @RabbitListener(queues = "${topics.reservation.response}")
     public void handleReservationResponse(ReservationResponse response) {
         try {
-            reservationResponseListener.reservationCompleted(response);
+            if (response.getState() == ReservationResponse.State.COMPLETED) {
+                reservationResponseListener.reservationCompleted(response);
+            }
+            reservationResponseListener.reservationCancelled(response);
         } catch (Exception e) { // workaround caused by rolling back event to rabbitmq in case when exception occurs
             System.out.println(e.getMessage());
         }

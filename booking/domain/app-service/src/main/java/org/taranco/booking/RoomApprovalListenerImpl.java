@@ -19,7 +19,7 @@ public class RoomApprovalListenerImpl implements RoomApprovalListener {
         final Booking approvedBooking = bookingRepository.findById(response.bookingId().getId())
                 .map(booking -> {
                     booking.book(response.bookingDate());
-                    log.info("Approved rooms for booking with id: {}", booking.getSnapshot().bookingId().getId().toString());
+                    log.info("Approved rooms for booking with id: {}", booking.getSnapshot().getBookingId().getId().toString());
                     return booking;
                 })
                 .orElseThrow(() -> new NotFoundException("Cannot find Booking with id: %s. It does not exists or was processed".formatted(response.bookingId().getId().toString())));

@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.taranco.BookingId;
 import org.taranco.CustomerId;
 import org.taranco.HotelId;
+import org.taranco.RoomId;
+import org.taranco.booking.dto.BookingTracker;
 import org.taranco.booking.dto.CreateBookingCommand;
 import org.taranco.booking.dto.CreateBookingResponse;
+import org.taranco.booking.dto.RoomHolder;
 import org.taranco.vo.DateRange;
 
 import java.io.IOException;
@@ -37,13 +40,17 @@ class BookingApi {
                         DateRange.createFromNowTo(Instant.now().plus(1, ChronoUnit.DAYS)),
                         new CustomerId(UUID.randomUUID()),
                         new HotelId(UUID.randomUUID()),
-                        Set.of()
+                        Set.of(
+                                new RoomHolder(new RoomId(UUID.randomUUID()), 2),
+                                new RoomHolder(new RoomId(UUID.randomUUID()), 3),
+                                new RoomHolder(new RoomId(UUID.randomUUID()), 4)
+                        )
                 )
         );
     }
 
     @GetMapping
-    Booking trackBooking(@RequestParam String bookingId) {
+    BookingTracker trackBooking(@RequestParam String bookingId) {
         return bookingApplicationService.trackBooking(new BookingId(UUID.fromString(bookingId)));
     }
 

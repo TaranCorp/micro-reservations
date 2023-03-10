@@ -8,7 +8,7 @@ import java.math.RoundingMode;
 import java.util.Objects;
 
 public class Money {
-    private final BigDecimal amount;
+    private BigDecimal amount;
 
     @JsonCreator
     public Money(@JsonProperty("amount") BigDecimal amount) {
@@ -16,6 +16,9 @@ public class Money {
             throw new IllegalArgumentException("Money cannot be null");
         }
         this.amount = amount;
+    }
+
+    protected Money() {
     }
 
     public boolean isGreaterThanZero() {

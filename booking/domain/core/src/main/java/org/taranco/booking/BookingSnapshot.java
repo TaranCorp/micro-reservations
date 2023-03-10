@@ -9,22 +9,23 @@ import org.taranco.vo.Money;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 class BookingSnapshot {
 
-    private final BookingId bookingId;
-    private final CustomerId customerId;
-    private final HotelId hotelId;
-    private final String hotelName;
-    private final Set<Room> rooms = new HashSet<>();
-    private final DateRange bookingPeriod;
-    private final Instant bookingDate;
-    private final Instant paymentDate;
-    private final Money price;
-    private final BookingStatus status;
+    private BookingId bookingId;
+    private CustomerId customerId;
+    private HotelId hotelId;
+    private String hotelName;
+    private Set<RoomSnapshot> rooms = new HashSet<>();
+    private DateRange bookingPeriod;
+    private Instant bookingDate;
+    private Instant paymentDate;
+    private Money price;
+    private BookingStatus status;
 
-    BookingSnapshot(BookingId bookingId, CustomerId customerId, HotelId hotelId, String hotelName, Set<Room> rooms, DateRange bookingPeriod, Instant bookingDate, Instant paymentDate, Money price, BookingStatus status) {
+    BookingSnapshot(BookingId bookingId, CustomerId customerId, HotelId hotelId, String hotelName, Set<RoomSnapshot> rooms, DateRange bookingPeriod, Instant bookingDate, Instant paymentDate, Money price, BookingStatus status) {
         this.bookingId = bookingId;
         this.customerId = customerId;
         this.hotelId = hotelId;
@@ -37,43 +38,59 @@ class BookingSnapshot {
         this.status = status;
     }
 
-    public CustomerId customerId() {
+    public BookingSnapshot() {
+    }
+
+    public CustomerId getCustomerId() {
         return customerId;
     }
 
-    public BookingId bookingId() {
+    public BookingId getBookingId() {
         return bookingId;
     }
 
-    public HotelId hotelId() {
+    public HotelId getHotelId() {
         return hotelId;
     }
 
-    public String hotelName() {
+    public String getHotelName() {
         return hotelName;
     }
 
-    public Set<Room> rooms() {
+    public Set<RoomSnapshot> getRooms() {
         return Collections.unmodifiableSet(rooms);
     }
 
-    public DateRange bookingPeriod() {
+    public DateRange getBookingPeriod() {
         return bookingPeriod;
     }
 
-    public Instant bookingDate() {
+    public Instant getBookingDate() {
         return bookingDate;
     }
 
-    public Instant paymentDate() {
+    public Instant getPaymentDate() {
         return paymentDate;
     }
 
-    public Money price() {
+    public Money getPrice() {
         return price;
     }
 
-    public BookingStatus status() {
+    public BookingStatus getStatus() {
         return status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookingSnapshot that = (BookingSnapshot) o;
+        return Objects.equals(bookingId, that.bookingId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bookingId);
     }
 }

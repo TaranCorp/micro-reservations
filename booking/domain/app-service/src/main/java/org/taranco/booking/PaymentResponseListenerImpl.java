@@ -29,18 +29,18 @@ public class PaymentResponseListenerImpl implements PaymentResponseListener {
     public void paymentCompleted(PaymentResponse response) {
         final Booking paidBooking = bookingRepository.findById(response.bookingId().getId()).map(booking -> {
                     booking.pay(response.paymentDate());
-                    log.info("Paid for booking with id: {}", booking.getSnapshot().bookingId().getId().toString());
+                    log.info("Paid for booking with id: {}", booking.getSnapshot().getBookingId().getId().toString());
                     return booking;
                 })
                 .orElseThrow(() -> new NotFoundException("Cannot find Booking with id: %s. It does not exists or was processed".formatted(response.bookingId().getId().toString())));
 
         final BookingSnapshot paidBookingSnapshot = bookingRepository.save(paidBooking).getSnapshot();
 
-        log.info("Publishing BookingPaidEvent with id: {}", paidBookingSnapshot.bookingId().getId().toString());
+        log.info("Publishing BookingPaidEvent with id: {}", paidBookingSnapshot.getBookingId().getId().toString());
         bookingAcceptator.publishBookingApproveRequest(new BookingPaidEvent(
-                paidBookingSnapshot.bookingId(),
-                paidBookingSnapshot.hotelId(),
-                paidBookingSnapshot.rooms().stream().map(room -> new RoomHolder(room.roomId(), room.vacancies())).collect(Collectors.toSet())
+                paidBookingSnapshot.getBookingId(),
+                paidBookingSnapshot.getHotelId(),
+                paidBookingSnapshot.getRooms().stream().map(room -> new RoomHolder(room.getRoomId(), room.getVacancies())).collect(Collectors.toSet())
         ));
     }
 
@@ -48,18 +48,18 @@ public class PaymentResponseListenerImpl implements PaymentResponseListener {
     public void paymentCancelled(PaymentResponse response) {
         final Booking cancellingBooking = bookingRepository.findById(response.bookingId().getId()).map(booking -> {
                     booking.initCancel();
-                    log.error("Init cancellation of booking with id: {}", booking.getSnapshot().bookingId().getId().toString());
+                    log.error("Init cancellation of booking with id: {}", booking.getSnapshot().getBookingId().getId().toString());
                     return booking;
                 })
                 .orElseThrow(() -> new NotFoundException("Cannot find Booking with id: %s. It does not exists or was processed".formatted(response.bookingId().getId().toString())));
 
         final BookingSnapshot cancellingBookingSnapshot = bookingRepository.save(cancellingBooking).getSnapshot();
 
-        log.error("Publishing BookingCancellingEvent of booking with id: {}", cancellingBookingSnapshot.bookingId().getId().toString());
+        log.error("Publishing BookingCancellingEvent of booking with id: {}", cancellingBookingSnapshot.getBookingId().getId().toString());
         bookingCancellator.publishCancellingBookingRequest(new BookingCancellingEvent(
-                cancellingBookingSnapshot.bookingId(),
-                cancellingBookingSnapshot.hotelId(),
-                cancellingBookingSnapshot.rooms().stream().map(room -> new RoomHolder(room.roomId(), room.vacancies())).collect(Collectors.toSet())
+                cancellingBookingSnapshot.getBookingId(),
+                cancellingBookingSnapshot.getHotelId(),
+                cancellingBookingSnapshot.getRooms().stream().map(room -> new RoomHolder(room.getRoomId(), room.getVacancies())).collect(Collectors.toSet())
         ));
     }
 }

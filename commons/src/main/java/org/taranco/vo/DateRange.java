@@ -22,8 +22,8 @@ public class DateRange {
         return new DateRange(from, to);
     }
 
-    private final Instant from;
-    private final Instant to;
+    private Instant from;
+    private Instant to;
 
     private DateRange(Instant from, Instant to) {
         if (from == null) {
@@ -37,6 +37,9 @@ public class DateRange {
         }
         this.from = from;
         this.to = to;
+    }
+
+    protected DateRange() {
     }
 
     public Instant getFrom() {

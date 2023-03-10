@@ -19,7 +19,7 @@ public class BookingCancellingResponseListenerImpl implements BookingCancellingR
         final Booking cancelledBooking = bookingRepository.findById(response.bookingId().getId())
                 .map(booking -> {
                     booking.cancel();
-                    log.info("Rooms released for booking with id: {}", booking.getSnapshot().bookingId().getId().toString());
+                    log.info("Rooms released for booking with id: {}", booking.getSnapshot().getBookingId().getId().toString());
                     return booking;
                 })
                 .orElseThrow(() -> new NotFoundException("Cannot find Booking with id: %s. It does not exists or was processed".formatted(response.bookingId().getId().toString())));

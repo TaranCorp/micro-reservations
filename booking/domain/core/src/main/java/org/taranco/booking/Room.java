@@ -5,6 +5,11 @@ import org.taranco.RoomId;
 import java.util.Objects;
 
 class Room {
+
+    static Room restore(RoomSnapshot snapshot) {
+        return new Room(snapshot.getRoomId(), snapshot.getVacancies());
+    }
+
     static Room create(RoomId roomId, int vacancies) {
         return new Room(roomId, vacancies);
     }
@@ -23,12 +28,16 @@ class Room {
         this.vacancies = vacancies;
     }
 
-    public RoomId roomId() {
+    public RoomId getRoomId() {
         return roomId;
     }
 
-    public int vacancies() {
+    public int getVacancies() {
         return vacancies;
+    }
+
+    RoomSnapshot getSnapshot() {
+        return new RoomSnapshot(roomId, vacancies);
     }
 
     @Override

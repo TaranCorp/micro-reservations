@@ -11,20 +11,21 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 class Booking {
     static Booking restore(BookingSnapshot snapshot) {
         return new Booking(
-                snapshot.bookingId(),
-                snapshot.customerId(),
-                snapshot.hotelId(),
-                snapshot.hotelName(),
-                snapshot.rooms(),
-                snapshot.bookingPeriod(),
-                snapshot.bookingDate(),
-                snapshot.paymentDate(),
-                snapshot.price(),
-                snapshot.status()
+                snapshot.getBookingId(),
+                snapshot.getCustomerId(),
+                snapshot.getHotelId(),
+                snapshot.getHotelName(),
+                snapshot.getRooms().stream().map(Room::restore).collect(Collectors.toSet()),
+                snapshot.getBookingPeriod(),
+                snapshot.getBookingDate(),
+                snapshot.getPaymentDate(),
+                snapshot.getPrice(),
+                snapshot.getStatus()
         );
     }
 
@@ -39,11 +40,11 @@ class Booking {
     private Money price;
     private BookingStatus status;
 
-    Booking(BookingId bookingId, CustomerId customerId, DateRange bookingPeriod, HotelId hotelId, Set<Room> rooms) {
+    Booking(BookingId bookingId, CustomerId customerId, DateRange bookingPeriod, HotelId hotelId) {
         if (hotelId == null) {
             throw new IllegalArgumentException("Hotel id cannot be null");
         }
-        addRooms(rooms);
+        this.hotelId = hotelId;
         this.customerId = customerId;
         this.bookingId = bookingId;
         this.bookingPeriod = bookingPeriod;
@@ -106,7 +107,7 @@ class Booking {
         this.status = next;
     }
 
-    private void addRooms(Set<Room> providedRooms) {
+    void addRooms(Set<Room> providedRooms) {
         this.rooms.addAll(providedRooms);
     }
 
@@ -116,7 +117,7 @@ class Booking {
                 customerId,
                 hotelId,
                 hotelName,
-                rooms,
+                rooms.stream().map(Room::getSnapshot).collect(Collectors.toSet()),
                 bookingPeriod,
                 bookingDate,
                 paymentDate,

@@ -16,11 +16,11 @@ public class RoomHolder {
         this.vacancies = vacancies;
     }
 
-    public RoomId roomId() {
+    public RoomId getRoomId() {
         return roomId;
     }
 
-    public int vacancies() {
+    public int getVacancies() {
         return vacancies;
     }
 }

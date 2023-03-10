@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
+   http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+                 version="1.0">
+
+    <description>XML Mapping file</description>
+
+    <entity class="org.taranco.booking.BookingSnapshot" access="FIELD">
+        <table name="booking"/>
+        <attributes>
+            <embedded-id name="bookingId">
+                <attribute-override name="id">
+                    <column name="booking_id"/>
+                </attribute-override>
+            </embedded-id>
+
+            <basic name="hotelName"/>
+            <basic name="bookingDate"/>
+            <basic name="paymentDate"/>
+            <basic name="status">
+                <enumerated>STRING</enumerated>
+            </basic>
+
+            <one-to-many name="rooms">
+                <join-column name="booking_id" nullable="true"/>
+            </one-to-many>
+
+            <embedded name="customerId">
+                <attribute-override name="id">
+                    <column name="customer_id" nullable="false"/>
+                </attribute-override>
+            </embedded>
+
+            <embedded name="hotelId">
+                <attribute-override name="id">
+                    <column name="hotel_id" nullable="false"/>
+                </attribute-override>
+            </embedded>
+
+            <embedded name="bookingPeriod"/>
+
+            <embedded name="price">
+                <attribute-override name="amount">
+                    <column/>
+                </attribute-override>
+            </embedded>
+        </attributes>
+    </entity>
+
+    <entity class="org.taranco.booking.RoomSnapshot" access="FIELD">
+        <table name="room"/>
+        <attributes>
+            <embedded-id name="roomId">
+                <attribute-override name="id">
+                    <column name="room_id"/>
+                </attribute-override>
+            </embedded-id>
+
+            <basic name="vacancies"/>
+
+<!--            <many-to-one name="bookingId">-->
+<!--                <join-column name="booking_id" nullable="false"/>-->
+<!--            </many-to-one>-->
+        </attributes>
+    </entity>
+
+    <embeddable class="org.taranco.BookingId" access="FIELD">
+        <attributes>
+            <basic name="id">
+                <column name="booking_id" nullable="false"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="org.taranco.vo.DateRange" access="FIELD">
+        <attributes>
+            <basic name="to">
+                <column name="date_to" nullable="false"/>
+            </basic>
+            <basic name="from">
+                <column name="date_from" nullable="false"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+</entity-mappings>

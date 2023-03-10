@@ -20,31 +20,31 @@ public class ReservationResponseListenerImpl implements ReservationResponseListe
 
     @Override
     public void reservationCompleted(ReservationResponse response) {
-        final Booking reservedBooking = bookingRepository.findById(response.bookingId().getId())
+        final Booking reservedBooking = bookingRepository.findById(response.getBookingId().getId())
                 .map(booking -> {
-                    booking.reserve(response.hotelName(), response.price());
-                    log.info("Reserved rooms for booking with id: {}", booking.getSnapshot().bookingId().getId().toString());
+                    booking.reserve(response.getHotelName(), response.getPrice());
+                    log.info("Reserved rooms for booking with id: {}", booking.getSnapshot().getBookingId().getId().toString());
                     return booking;
                 })
-                .orElseThrow(() -> new NotFoundException("Cannot find Booking with id: %s. It does not exists or was processed".formatted(response.bookingId().getId().toString())));
+                .orElseThrow(() -> new NotFoundException("Cannot find Booking with id: %s. It does not exists or was processed".formatted(response.getBookingId().getId().toString())));
 
         final BookingSnapshot bookingSnapshot = bookingRepository.save(reservedBooking).getSnapshot();
 
-        log.info("Publishing BookingReservedEvent with id: {}", bookingSnapshot.bookingId().getId().toString());
+        log.info("Publishing BookingReservedEvent with id: {}", bookingSnapshot.getBookingId().getId().toString());
         paymentCreator.publishPaymentRequest(new BookingReservedEvent(
-                bookingSnapshot.bookingId(), bookingSnapshot.price(), bookingSnapshot.customerId()
+                bookingSnapshot.getBookingId(), bookingSnapshot.getPrice(), bookingSnapshot.getCustomerId()
         ));
     }
 
     @Override
     public void reservationCancelled(ReservationResponse response) {
-        final Booking cancelledBooking = bookingRepository.findById(response.bookingId().getId())
+        final Booking cancelledBooking = bookingRepository.findById(response.getBookingId().getId())
                 .map(booking -> {
                     booking.cancel();
-                    log.error("Cancelled booking with id: {}", booking.getSnapshot().bookingId().getId().toString());
+                    log.error("Cancelled booking with id: {}", booking.getSnapshot().getBookingId().getId().toString());
                     return booking;
                 })
-                .orElseThrow(() -> new NotFoundException("Cannot find Booking with id: %s. It does not exists or was processed".formatted(response.bookingId().getId().toString())));
+                .orElseThrow(() -> new NotFoundException("Cannot find Booking with id: %s. It does not exists or was processed".formatted(response.getBookingId().getId().toString())));
 
         bookingRepository.save(cancelledBooking).getSnapshot();
     }
