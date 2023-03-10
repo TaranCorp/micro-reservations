@@ -1,6 +1,7 @@
 package org.taranco.payment;
 
 import org.taranco.booking.dto.BookingReservedEvent;
+import org.taranco.booking.port.output.PaymentEventPublisher;
 
 public class PaymentCreator {
     private final PaymentEventPublisher paymentEventPublisher;

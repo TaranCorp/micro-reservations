@@ -6,6 +6,8 @@ import org.taranco.NotFoundException;
 import org.taranco.booking.dto.BookingCancellingEvent;
 import org.taranco.booking.dto.BookingPaidEvent;
 import org.taranco.booking.dto.PaymentResponse;
+import org.taranco.booking.port.input.PaymentResponseListener;
+import org.taranco.booking.port.output.BookingRepository;
 import org.taranco.hotel.BookingAcceptator;
 import org.taranco.hotel.BookingCancellator;
 import org.taranco.booking.dto.RoomHolder;
@@ -28,9 +30,8 @@ public class PaymentResponseListenerImpl implements PaymentResponseListener {
     @Override
     public void paymentCompleted(PaymentResponse response) {
         final Booking paidBooking = bookingRepository.findById(response.bookingId().getId()).map(booking -> {
-                    booking.pay(response.paymentDate());
                     log.info("Paid for booking with id: {}", booking.getSnapshot().getBookingId().getId().toString());
-                    return booking;
+                    return booking.pay(response.paymentDate());
                 })
                 .orElseThrow(() -> new NotFoundException("Cannot find Booking with id: %s. It does not exists or was processed".formatted(response.bookingId().getId().toString())));
 
@@ -47,9 +48,8 @@ public class PaymentResponseListenerImpl implements PaymentResponseListener {
     @Override
     public void paymentCancelled(PaymentResponse response) {
         final Booking cancellingBooking = bookingRepository.findById(response.bookingId().getId()).map(booking -> {
-                    booking.initCancel();
                     log.error("Init cancellation of booking with id: {}", booking.getSnapshot().getBookingId().getId().toString());
-                    return booking;
+                    return booking.initCancel();
                 })
                 .orElseThrow(() -> new NotFoundException("Cannot find Booking with id: %s. It does not exists or was processed".formatted(response.bookingId().getId().toString())));
 

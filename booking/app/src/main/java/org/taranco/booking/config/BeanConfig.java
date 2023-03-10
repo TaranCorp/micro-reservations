@@ -9,13 +9,13 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.taranco.booking.BookingApplicationService;
+import org.taranco.booking.port.input.BookingApplicationService;
 import org.taranco.booking.BookingApplicationServiceImpl;
-import org.taranco.booking.BookingRepository;
-import org.taranco.booking.ReservationResponseListener;
+import org.taranco.booking.port.output.BookingRepository;
+import org.taranco.booking.port.input.ReservationResponseListener;
 import org.taranco.booking.ReservationResponseListenerImpl;
 import org.taranco.hotel.ReservationCreator;
-import org.taranco.hotel.ReservationEventPublisher;
+import org.taranco.booking.port.output.ReservationEventPublisher;
 import org.taranco.payment.PaymentCreator;
 
 @Configuration

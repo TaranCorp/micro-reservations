@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.taranco.NotFoundException;
 import org.taranco.booking.dto.CancellationResponse;
+import org.taranco.booking.port.input.BookingCancellingResponseListener;
+import org.taranco.booking.port.output.BookingRepository;
 
 public class BookingCancellingResponseListenerImpl implements BookingCancellingResponseListener {
     private static final Logger log = LoggerFactory.getLogger(BookingCancellingResponseListenerImpl.class);
@@ -18,9 +20,8 @@ public class BookingCancellingResponseListenerImpl implements BookingCancellingR
     public void cancellationCompleted(CancellationResponse response) {
         final Booking cancelledBooking = bookingRepository.findById(response.bookingId().getId())
                 .map(booking -> {
-                    booking.cancel();
                     log.info("Rooms released for booking with id: {}", booking.getSnapshot().getBookingId().getId().toString());
-                    return booking;
+                    return booking.cancel();
                 })
                 .orElseThrow(() -> new NotFoundException("Cannot find Booking with id: %s. It does not exists or was processed".formatted(response.bookingId().getId().toString())));
 

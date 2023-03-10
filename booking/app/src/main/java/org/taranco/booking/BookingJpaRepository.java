@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.taranco.BookingId;
 import org.taranco.RoomId;
+import org.taranco.booking.port.output.BookingRepository;
 
 import java.util.Optional;
 import java.util.UUID;

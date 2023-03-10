@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.taranco.NotFoundException;
 import org.taranco.booking.dto.BookingReservedEvent;
 import org.taranco.booking.dto.ReservationResponse;
+import org.taranco.booking.port.input.ReservationResponseListener;
+import org.taranco.booking.port.output.BookingRepository;
 import org.taranco.payment.PaymentCreator;
 
 public class ReservationResponseListenerImpl implements ReservationResponseListener {
@@ -22,9 +24,8 @@ public class ReservationResponseListenerImpl implements ReservationResponseListe
     public void reservationCompleted(ReservationResponse response) {
         final Booking reservedBooking = bookingRepository.findById(response.getBookingId().getId())
                 .map(booking -> {
-                    booking.reserve(response.getHotelName(), response.getPrice());
                     log.info("Reserved rooms for booking with id: {}", booking.getSnapshot().getBookingId().getId().toString());
-                    return booking;
+                    return booking.reserve(response.getHotelName(), response.getPrice());
                 })
                 .orElseThrow(() -> new NotFoundException("Cannot find Booking with id: %s. It does not exists or was processed".formatted(response.getBookingId().getId().toString())));
 
@@ -40,9 +41,8 @@ public class ReservationResponseListenerImpl implements ReservationResponseListe
     public void reservationCancelled(ReservationResponse response) {
         final Booking cancelledBooking = bookingRepository.findById(response.getBookingId().getId())
                 .map(booking -> {
-                    booking.cancel();
                     log.error("Cancelled booking with id: {}", booking.getSnapshot().getBookingId().getId().toString());
-                    return booking;
+                    return booking.cancel();
                 })
                 .orElseThrow(() -> new NotFoundException("Cannot find Booking with id: %s. It does not exists or was processed".formatted(response.getBookingId().getId().toString())));
 

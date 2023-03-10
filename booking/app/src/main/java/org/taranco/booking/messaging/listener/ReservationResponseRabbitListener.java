@@ -2,7 +2,7 @@ package org.taranco.booking.messaging.listener;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
-import org.taranco.booking.ReservationResponseListener;
+import org.taranco.booking.port.input.ReservationResponseListener;
 import org.taranco.booking.dto.ReservationResponse;
 
 @Component

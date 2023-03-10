@@ -1,4 +1,6 @@
-package org.taranco.booking;
+package org.taranco.booking.port.output;
+
+import org.taranco.booking.Booking;
 
 import java.util.Optional;
 import java.util.UUID;

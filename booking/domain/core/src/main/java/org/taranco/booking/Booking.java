@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-class Booking {
+public class Booking {
     static Booking restore(BookingSnapshot snapshot) {
         return new Booking(
                 snapshot.getBookingId(),

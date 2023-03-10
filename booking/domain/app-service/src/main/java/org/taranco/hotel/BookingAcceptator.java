@@ -3,6 +3,7 @@ package org.taranco.hotel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.taranco.booking.dto.BookingPaidEvent;
+import org.taranco.booking.port.output.BookingApproveEventPublisher;
 
 public class BookingAcceptator {
     private static final Logger log = LoggerFactory.getLogger(BookingAcceptator.class);

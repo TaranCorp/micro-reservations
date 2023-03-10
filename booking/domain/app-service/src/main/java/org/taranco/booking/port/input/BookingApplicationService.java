@@ -1,4 +1,4 @@
-package org.taranco.booking;
+package org.taranco.booking.port.input;
 
 import org.taranco.BookingId;
 import org.taranco.booking.dto.BookingTracker;

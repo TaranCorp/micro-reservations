@@ -1,4 +1,4 @@
-package org.taranco.hotel;
+package org.taranco.booking.port.output;
 
 import org.taranco.DomainEventPublisher;
 import org.taranco.booking.dto.BookingCreatedEvent;
