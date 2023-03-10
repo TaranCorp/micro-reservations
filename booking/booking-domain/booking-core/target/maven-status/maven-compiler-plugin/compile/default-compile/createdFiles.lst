@@ -1,0 +1,8 @@
+org\taranco\booking\Booking.class
+org\taranco\DomainEventPublisher.class
+org\taranco\booking\Room.class
+org\taranco\booking\BookingStatus.class
+org\taranco\booking\BookingStatus$1.class
+org\taranco\booking\BookingSnapshot.class
+org\taranco\DomainEvent.class
+org\taranco\booking\RoomSnapshot.class

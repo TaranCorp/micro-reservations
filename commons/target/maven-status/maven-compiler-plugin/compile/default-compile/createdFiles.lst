@@ -1,0 +1,10 @@
+org\taranco\PaymentId.class
+org\taranco\vo\DateRange.class
+org\taranco\CustomerId.class
+org\taranco\BookingId.class
+org\taranco\ReservationId.class
+org\taranco\RoomId.class
+org\taranco\HotelId.class
+org\taranco\vo\Money.class
+org\taranco\NotFoundException.class
+org\taranco\Persistable.class

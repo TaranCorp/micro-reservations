@@ -1,0 +1,8 @@
+org\taranco\booking\BookingApi.class
+org\taranco\booking\BookingJpaRepository.class
+org\taranco\booking\messaging\listener\ReservationResponseRabbitListener.class
+org\taranco\booking\config\BeanConfig.class
+org\taranco\booking\RoomRepositoryInterface.class
+org\taranco\booking\BookingApplication.class
+org\taranco\booking\BookingRepositoryInterface.class
+org\taranco\booking\messaging\publisher\ReservationRequestRabbitPublisher.class
