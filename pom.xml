@@ -35,12 +35,12 @@
             </dependency>
             <dependency>
                 <groupId>org.taranco</groupId>
-                <artifactId>core</artifactId>
+                <artifactId>booking-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.taranco</groupId>
-                <artifactId>app-service</artifactId>
+                <artifactId>booking-app-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

@@ -9,16 +9,20 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>app</artifactId>
+    <artifactId>booking-app</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.taranco</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>booking-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.taranco</groupId>
-            <artifactId>app-service</artifactId>
+            <artifactId>booking-app-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.taranco</groupId>
+            <artifactId>commons</artifactId>
         </dependency>
 
         <dependency>
