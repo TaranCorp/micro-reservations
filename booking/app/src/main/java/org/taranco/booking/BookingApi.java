@@ -1,9 +1,11 @@
 package org.taranco.booking;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +25,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Set;
 import java.util.UUID;
 
-@RequestMapping("/api/booking")
+@RequestMapping(value = "/api/booking", consumes = MediaType.APPLICATION_JSON_VALUE)
 @RestController
 class BookingApi {
 
@@ -34,19 +36,8 @@ class BookingApi {
     }
 
     @PostMapping
-    CreateBookingResponse createBooking() {
-        return bookingApplicationService.createBooking(
-                new CreateBookingCommand(
-                        DateRange.createFromNowTo(Instant.now().plus(1, ChronoUnit.DAYS)),
-                        new CustomerId(UUID.randomUUID()),
-                        new HotelId(UUID.randomUUID()),
-                        Set.of(
-                                new RoomHolder(new RoomId(UUID.randomUUID()), 2),
-                                new RoomHolder(new RoomId(UUID.randomUUID()), 3),
-                                new RoomHolder(new RoomId(UUID.randomUUID()), 4)
-                        )
-                )
-        );
+    CreateBookingResponse createBooking(@RequestBody CreateBookingCommand command) {
+        return bookingApplicationService.createBooking(command);
     }
 
     @GetMapping

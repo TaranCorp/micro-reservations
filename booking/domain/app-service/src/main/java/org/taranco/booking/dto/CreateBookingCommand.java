@@ -1,6 +1,7 @@
 package org.taranco.booking.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.taranco.CustomerId;
 import org.taranco.HotelId;
 import org.taranco.vo.DateRange;
@@ -16,10 +17,10 @@ public class CreateBookingCommand {
 
     @JsonCreator
     public CreateBookingCommand(
-            DateRange bookingPeriod,
-            CustomerId customerId,
-            HotelId hotelId,
-            Set<RoomHolder> rooms
+            @JsonProperty("bookingPeriod") DateRange bookingPeriod,
+            @JsonProperty("customerId") CustomerId customerId,
+            @JsonProperty("hotelId") HotelId hotelId,
+            @JsonProperty("rooms") Set<RoomHolder> rooms
     ) {
         this.bookingPeriod = bookingPeriod;
         this.customerId = customerId;
@@ -27,19 +28,19 @@ public class CreateBookingCommand {
         this.rooms.addAll(rooms);
     }
 
-    public DateRange bookingPeriod() {
+    public DateRange getBookingPeriod() {
         return bookingPeriod;
     }
 
-    public CustomerId customerId() {
+    public CustomerId getCustomerId() {
         return customerId;
     }
 
-    public HotelId hotelId() {
+    public HotelId getHotelId() {
         return hotelId;
     }
 
-    public Set<RoomHolder> rooms() {
+    public Set<RoomHolder> getRooms() {
         return rooms;
     }
 }

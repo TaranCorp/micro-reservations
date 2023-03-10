@@ -9,7 +9,6 @@ import java.util.Objects;
 
 public class DateRange {
 
-    @JsonCreator
     public static DateRange createFromNowTo(@JsonProperty("to") Instant to) {
         return new DateRange(Instant.now(), to);
     }

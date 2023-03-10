@@ -31,11 +31,11 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
     public CreateBookingResponse createBooking(CreateBookingCommand command) {
         Booking booking = new Booking(
                 new BookingId(UUID.randomUUID()),
-                command.customerId(),
-                command.bookingPeriod(),
-                command.hotelId()
+                command.getCustomerId(),
+                command.getBookingPeriod(),
+                command.getHotelId()
         );
-        booking.addRooms(command.rooms().stream().map(roomHolder -> Room.create(roomHolder.getRoomId(), roomHolder.getVacancies())).collect(Collectors.toSet()));
+        booking.addRooms(command.getRooms().stream().map(roomHolder -> Room.create(roomHolder.getRoomId(), roomHolder.getVacancies())).collect(Collectors.toSet()));
 
         final Booking persistedBooking = bookingRepository.save(booking);
 
