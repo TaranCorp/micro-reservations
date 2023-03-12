@@ -9,23 +9,25 @@
         <module name="booking-core" />
         <module name="hotel-domain-core" />
         <module name="hotel-app-service" />
+        <module name="hotel-infrastructure" />
+        <module name="booking-infrastructure" />
         <module name="booking-app-service" />
         <module name="commons" />
-        <module name="booking-app" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="booking-app" options="-parameters" />
       <module name="booking-app-service" options="-parameters" />
       <module name="booking-core" options="-parameters" />
       <module name="booking-domain" options="" />
+      <module name="booking-infrastructure" options="-parameters" />
       <module name="commons" options="-parameters" />
       <module name="hotel" options="" />
       <module name="hotel-app-service" options="-parameters" />
       <module name="hotel-domain" options="" />
       <module name="hotel-domain-core" options="-parameters" />
+      <module name="hotel-infrastructure" options="-parameters" />
       <module name="micro-reservations" options="" />
     </option>
   </component>
