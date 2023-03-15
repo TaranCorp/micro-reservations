@@ -37,6 +37,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
                 command.getBookingPeriod(),
                 command.getHotelId()
         );
+
         booking.addRooms(command.getRooms().stream().map(roomHolder -> Room.create(roomHolder.getRoomId(), roomHolder.getVacancies())).collect(Collectors.toSet()));
 
         final Booking persistedBooking = bookingRepository.save(booking);

@@ -12,7 +12,7 @@
     <artifactId>hotel-domain</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>hotel-domain-core</module>
+        <module>hotel-core</module>
         <module>hotel-app-service</module>
     </modules>
 

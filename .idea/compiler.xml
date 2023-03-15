@@ -7,28 +7,34 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="booking-core" />
-        <module name="hotel-domain-core" />
         <module name="hotel-app-service" />
         <module name="hotel-infrastructure" />
         <module name="booking-infrastructure" />
+        <module name="hotel-core" />
         <module name="booking-app-service" />
         <module name="commons" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="domain" target="17" />
+      <module name="hotel-domain-core" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="booking" options="-parameters" />
       <module name="booking-app-service" options="-parameters" />
       <module name="booking-core" options="-parameters" />
-      <module name="booking-domain" options="" />
+      <module name="booking-domain" options="-parameters" />
       <module name="booking-infrastructure" options="-parameters" />
       <module name="commons" options="-parameters" />
-      <module name="hotel" options="" />
+      <module name="hotel" options="-parameters" />
       <module name="hotel-app-service" options="-parameters" />
-      <module name="hotel-domain" options="" />
+      <module name="hotel-core" options="-parameters" />
+      <module name="hotel-domain" options="-parameters" />
       <module name="hotel-domain-core" options="-parameters" />
       <module name="hotel-infrastructure" options="-parameters" />
-      <module name="micro-reservations" options="" />
+      <module name="micro-reservations" options="-parameters" />
     </option>
   </component>
 </project>

@@ -44,6 +44,9 @@ public class Booking {
         if (hotelId == null) {
             throw new IllegalArgumentException("Hotel id cannot be null");
         }
+        if (bookingId == null) {
+            throw new IllegalArgumentException("Booking id cannot be null");
+        }
         this.hotelId = hotelId;
         this.customerId = customerId;
         this.bookingId = bookingId;
@@ -80,6 +83,8 @@ public class Booking {
         hotelId = null;
         hotelName = null;
         price = null;
+        bookingDate = null;
+        paymentDate = null;
         return this;
     }
 
