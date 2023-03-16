@@ -4,17 +4,18 @@ import org.taranco.CustomerId;
 import org.taranco.RoomId;
 import org.taranco.vo.DateRange;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class ReserveRoomCommand {
     private CustomerId customerId;
     private DateRange bookingPeriod;
-    private Set<RoomReservationDetails> details;
+    private Set<RoomReservationDetails> details = new HashSet<>();
 
     public ReserveRoomCommand(CustomerId customerId, DateRange bookingPeriod, Set<RoomReservationDetails> details) {
         this.customerId = customerId;
         this.bookingPeriod = bookingPeriod;
-        this.details = details;
+        this.details.addAll(details);
     }
 
     public CustomerId getCustomerId() {

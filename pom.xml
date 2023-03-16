@@ -43,6 +43,11 @@
                 <artifactId>booking-app-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.taranco</groupId>
+                <artifactId>hotel-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.fasterxml.jackson.datatype</groupId>

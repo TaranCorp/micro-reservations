@@ -15,8 +15,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-class Hotel {
-    static Hotel hotel(HotelId hotelId, String name, Set<Room> rooms) {
+public class Hotel {
+    static Hotel create(HotelId hotelId, String name, Set<Room> rooms) {
         if (rooms.isEmpty()) {
             throw new IllegalArgumentException("Cannot create Hotel without rooms");
         }
@@ -57,7 +57,7 @@ class Hotel {
         return reservationResponse;
     }
 
-    void bookRooms(Set<TimesheetId> timesheetIds, CustomerId ownerId) {
+    Hotel bookRooms(Set<TimesheetId> timesheetIds, CustomerId ownerId) {
         Map<TimesheetId, Timesheet> timesheetMap = new HashMap<>();
         timesheets.forEach(timesheet -> timesheetMap.put(timesheet.getTimesheetId(), timesheet));
 
@@ -73,9 +73,10 @@ class Hotel {
                 timesheet.setStatus(RoomStatus.BOOKED);
             }
         });
+        return this;
     }
 
-    void releaseRooms(Set<TimesheetId> timesheetIds, CustomerId ownerId) {
+    Hotel releaseRooms(Set<TimesheetId> timesheetIds, CustomerId ownerId) {
         Map<TimesheetId, Timesheet> timesheetMap = new HashMap<>();
         timesheets.forEach(timesheet -> timesheetMap.put(timesheet.getTimesheetId(), timesheet));
 
@@ -88,6 +89,7 @@ class Hotel {
                 timesheets.remove(timesheet);
             }
         });
+        return this;
     }
 
     private Timesheet makeReservation(RoomId roomId, int spotsToReserve, CustomerId customerId, DateRange bookingPeriod) {

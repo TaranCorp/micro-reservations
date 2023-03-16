@@ -3,7 +3,7 @@ package org.taranco.hotel;
 import org.taranco.RoomId;
 import org.taranco.vo.Money;
 
-class Room {
+public class Room {
     static Room create(RoomId roomId, int number, Money price, BedType bedsType, int beds) {
         return new Room(roomId, number, price, bedsType, beds);
     }
