@@ -53,6 +53,19 @@ public class DateRange {
         return unit.between(from, to);
     }
 
+    public boolean isInRange(Instant date) {
+        return isFromOrTo(date) ||
+               isBetweenFromAndTo(date);
+    }
+
+    private boolean isFromOrTo(Instant date) {
+        return date.equals(from) || date.equals(to);
+    }
+
+    private boolean isBetweenFromAndTo(Instant date) {
+        return date.isAfter(from) && date.isBefore(to);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

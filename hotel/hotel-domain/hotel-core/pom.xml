@@ -11,4 +11,11 @@
 
     <artifactId>hotel-core</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.taranco</groupId>
+            <artifactId>commons</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
