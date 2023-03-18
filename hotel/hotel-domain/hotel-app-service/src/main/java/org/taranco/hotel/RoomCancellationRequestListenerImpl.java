@@ -9,10 +9,10 @@ import org.taranco.hotel.port.input.RoomCancellationRequestListener;
 
 import java.util.Set;
 
-class RoomCancellationRequestListenerImpl implements RoomCancellationRequestListener {
+public class RoomCancellationRequestListenerImpl implements RoomCancellationRequestListener {
     private final HotelApplicationService hotelApplicationService;
 
-    RoomCancellationRequestListenerImpl(HotelApplicationService hotelApplicationService) {
+    public RoomCancellationRequestListenerImpl(HotelApplicationService hotelApplicationService) {
         this.hotelApplicationService = hotelApplicationService;
     }
 

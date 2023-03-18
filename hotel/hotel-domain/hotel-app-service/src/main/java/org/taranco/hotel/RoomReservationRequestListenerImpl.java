@@ -6,10 +6,10 @@ import org.taranco.hotel.port.input.HotelApplicationService;
 import org.taranco.hotel.port.input.RoomReservationRequestListener;
 import org.taranco.hotel.vo.ReserveRoomCommand;
 
-class RoomReservationRequestListenerImpl implements RoomReservationRequestListener {
+public class RoomReservationRequestListenerImpl implements RoomReservationRequestListener {
     private final HotelApplicationService hotelApplicationService;
 
-    RoomReservationRequestListenerImpl(HotelApplicationService hotelApplicationService) {
+    public RoomReservationRequestListenerImpl(HotelApplicationService hotelApplicationService) {
         this.hotelApplicationService = hotelApplicationService;
     }
 

@@ -4,15 +4,15 @@ import org.taranco.BookingId;
 import org.taranco.CustomerId;
 import org.taranco.HotelId;
 import org.taranco.TimesheetId;
-import org.taranco.hotel.Hotel;
-import org.taranco.hotel.Room;
+import org.taranco.hotel.dto.CreatedHotelResponse;
+import org.taranco.hotel.dto.RoomCreateCommand;
 import org.taranco.hotel.vo.ReservationResponse;
 import org.taranco.hotel.vo.ReserveRoomCommand;
 
 import java.util.Set;
 
 public interface HotelApplicationService {
-    Hotel initHotel(HotelId hotelId, String name, Set<Room> rooms);
+    CreatedHotelResponse initHotel(String name, Set<RoomCreateCommand> rooms);
 
     ReservationResponse reserveRooms(ReserveRoomCommand reserveRoomCommands, HotelId hotelId, BookingId bookingId);
 

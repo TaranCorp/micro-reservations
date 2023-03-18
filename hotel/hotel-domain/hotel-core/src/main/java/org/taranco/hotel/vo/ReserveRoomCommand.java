@@ -5,6 +5,7 @@ import org.taranco.RoomId;
 import org.taranco.vo.DateRange;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class ReserveRoomCommand {
@@ -46,5 +47,20 @@ public class ReserveRoomCommand {
         public int getPlaces() {
             return places;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            RoomReservationDetails that = (RoomReservationDetails) o;
+            return Objects.equals(roomId, that.roomId);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(roomId);
+        }
     }
+
+
 }

@@ -9,10 +9,10 @@ import org.taranco.hotel.port.input.RoomBookingRequestListener;
 
 import java.util.Set;
 
-class RoomBookingRequestListenerImpl implements RoomBookingRequestListener {
+public class RoomBookingRequestListenerImpl implements RoomBookingRequestListener {
     private final HotelApplicationService hotelApplicationService;
 
-    RoomBookingRequestListenerImpl(HotelApplicationService hotelApplicationService) {
+    public RoomBookingRequestListenerImpl(HotelApplicationService hotelApplicationService) {
         this.hotelApplicationService = hotelApplicationService;
     }
 

@@ -11,4 +11,45 @@
 
     <artifactId>hotel-infrastructure</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.taranco</groupId>
+            <artifactId>commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.taranco</groupId>
+            <artifactId>hotel-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.taranco</groupId>
+            <artifactId>hotel-app-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.taranco</groupId>
+            <artifactId>booking-app-service</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

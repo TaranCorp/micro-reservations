@@ -5,30 +5,22 @@ import org.taranco.TimesheetId;
 import org.taranco.vo.DateRange;
 import org.taranco.vo.Money;
 
-class Timesheet {
-    public static Timesheet restore(TimesheetSnapshot timesheetSnapshot) {
-        return new Timesheet(
-                timesheetSnapshot.getTimesheetId(),
-                timesheetSnapshot.getCustomerId(),
-                timesheetSnapshot.getTotalPrice(),
-                timesheetSnapshot.getBookingPeriod(),
-                timesheetSnapshot.getStatus()
-        );
-    }
-
+public class TimesheetSnapshot {
     private TimesheetId timesheetId;
     private CustomerId customerId;
     private Money totalPrice;
     private DateRange bookingPeriod;
-
     private RoomStatus status;
 
-    public Timesheet(TimesheetId timesheetId, CustomerId customerId, Money totalPrice, DateRange bookingPeriod, RoomStatus status) {
+    public TimesheetSnapshot(TimesheetId timesheetId, CustomerId customerId, Money totalPrice, DateRange bookingPeriod, RoomStatus status) {
         this.timesheetId = timesheetId;
         this.customerId = customerId;
         this.totalPrice = totalPrice;
         this.bookingPeriod = bookingPeriod;
         this.status = status;
+    }
+
+    protected TimesheetSnapshot() {
     }
 
     public TimesheetId getTimesheetId() {
@@ -49,19 +41,5 @@ class Timesheet {
 
     public RoomStatus getStatus() {
         return status;
-    }
-
-    public void setStatus(RoomStatus status) {
-        this.status = status;
-    }
-
-    public TimesheetSnapshot getSnapshot() {
-        return new TimesheetSnapshot(
-                timesheetId,
-                customerId,
-                totalPrice,
-                bookingPeriod,
-                status
-        );
     }
 }

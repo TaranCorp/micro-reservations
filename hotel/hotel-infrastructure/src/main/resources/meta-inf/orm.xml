@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
+   http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+                 version="1.0">
+
+    <entity class="org.taranco.hotel.HotelSnapshot" access="FIELD">
+        <table name="hotel"/>
+        <attributes>
+            <embedded-id name="hotelId">
+                <attribute-override name="id">
+                    <column name="hotel_id"/>
+                </attribute-override>
+            </embedded-id>
+
+            <basic name="name">
+                <column nullable="false"/>
+            </basic>
+
+            <one-to-many name="rooms">
+                <join-column name="hotel_id"/>
+            </one-to-many>
+
+            <one-to-many name="timesheets">
+                <join-column name="hotel_id"/>
+            </one-to-many>
+        </attributes>
+    </entity>
+
+    <entity class="org.taranco.hotel.RoomSnapshot" access="FIELD">
+        <table name="room"/>
+        <attributes>
+            <embedded-id name="roomId">
+                <attribute-override name="id">
+                    <column name="room_id"/>
+                </attribute-override>
+            </embedded-id>
+
+            <basic name="number">
+                <column nullable="false"/>
+            </basic>
+
+            <basic name="beds">
+                <column nullable="false"/>
+            </basic>
+
+            <basic name="bedsType">
+                <column nullable="false"/>
+                <enumerated>STRING</enumerated>
+            </basic>
+
+            <embedded name="price"/>
+        </attributes>
+    </entity>
+
+    <entity class="org.taranco.hotel.TimesheetSnapshot" access="FIELD">
+        <table name="timesheet"/>
+        <attributes>
+            <embedded-id name="timesheetId">
+                <attribute-override name="id">
+                    <column name="timesheet_id"/>
+                </attribute-override>
+            </embedded-id>
+
+            <basic name="status">
+                <column nullable="false"/>
+                <enumerated>STRING</enumerated>
+            </basic>
+
+            <embedded name="customerId"/>
+
+            <embedded name="totalPrice"/>
+
+            <embedded name="bookingPeriod"/>
+        </attributes>
+    </entity>
+
+    <embeddable class="org.taranco.CustomerId" access="FIELD">
+        <attributes>
+            <basic name="id">
+                <column name="customer_id" nullable="true"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="org.taranco.vo.Money" access="FIELD">
+        <attributes>
+            <basic name="amount">
+                <column nullable="false"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="org.taranco.vo.DateRange" access="FIELD">
+        <attributes>
+            <basic name="from">
+                <column name="date_from" nullable="false"/>
+            </basic>
+            <basic name="to">
+                <column name="date_to" nullable="false"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+</entity-mappings>

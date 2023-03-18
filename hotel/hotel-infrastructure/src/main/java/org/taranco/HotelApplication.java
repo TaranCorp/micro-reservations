@@ -1,13 +1,11 @@
-package org.taranco.booking;
+package org.taranco;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-class BookingApplication {
-
+class HotelApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BookingApplication.class);
+        SpringApplication.run(HotelApplication.class);
     }
-
 }

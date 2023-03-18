@@ -4,10 +4,14 @@ import org.taranco.BookingId;
 import org.taranco.CustomerId;
 import org.taranco.HotelId;
 import org.taranco.NotFoundException;
+import org.taranco.RoomId;
 import org.taranco.TimesheetId;
 import org.taranco.hotel.dto.BookedRoomsResponse;
+import org.taranco.hotel.dto.CreatedHotelResponse;
+import org.taranco.hotel.dto.CreatedRoomResponse;
 import org.taranco.hotel.dto.ReleasedRoomsResponse;
 import org.taranco.hotel.dto.ReservedRoomsResponse;
+import org.taranco.hotel.dto.RoomCreateCommand;
 import org.taranco.hotel.port.input.HotelApplicationService;
 import org.taranco.hotel.port.output.BookedRoomsResponsePublisher;
 import org.taranco.hotel.port.output.HotelRepository;
@@ -15,11 +19,14 @@ import org.taranco.hotel.port.output.ReleasedRoomsResponsePublisher;
 import org.taranco.hotel.port.output.ReservedRoomsResponsePublisher;
 import org.taranco.hotel.vo.ReservationResponse;
 import org.taranco.hotel.vo.ReserveRoomCommand;
+import org.taranco.vo.Money;
 
 import java.time.Instant;
 import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
-class HotelApplicationServiceImpl implements HotelApplicationService {
+public class HotelApplicationServiceImpl implements HotelApplicationService {
     private final HotelRepository hotelRepository;
     private final ReservedRoomsResponsePublisher reservedRoomsResponsePublisher;
     private final ReleasedRoomsResponsePublisher releasedRoomsResponsePublisher;
@@ -36,9 +43,32 @@ class HotelApplicationServiceImpl implements HotelApplicationService {
     }
 
     @Override
-    public Hotel initHotel(HotelId hotelId, String name, Set<Room> rooms) {
-        return hotelRepository.save(
-                Hotel.create(hotelId, name, rooms)
+    public CreatedHotelResponse initHotel(String name, Set<RoomCreateCommand> rooms) {
+        final Hotel persistedHotel = hotelRepository.save(
+                Hotel.create(new HotelId(UUID.randomUUID()), name,
+                        rooms.stream().map(command -> Room.create(
+                                new RoomId(UUID.randomUUID()),
+                                command.getNumber(),
+                                new Money(command.getPrice()),
+                                BedType.valueOf(command.getBedsType()),
+                                command.getBeds())
+                        ).collect(Collectors.toSet())
+                )
+        );
+
+        final HotelSnapshot hotelSnapshot = persistedHotel.getSnapshot();
+
+        return new CreatedHotelResponse(
+            hotelSnapshot.getHotelId().getId(),
+            hotelSnapshot.getName(),
+            hotelSnapshot.getRooms().stream()
+                    .map(room -> new CreatedRoomResponse(
+                            room.getRoomId().getId(),
+                            room.getNumber(),
+                            room.getPrice().getAmount(),
+                            room.getBedsType().name(),
+                            room.getBeds())
+                    ).collect(Collectors.toSet())
         );
     }
 

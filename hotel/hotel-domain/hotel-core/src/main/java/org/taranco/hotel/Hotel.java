@@ -14,15 +14,31 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Hotel {
+    public static Hotel restore(HotelSnapshot snapshot) {
+        return new Hotel(
+                snapshot.getHotelId(),
+                snapshot.getName(),
+                snapshot.getRooms().stream()
+                        .map(Room::restore)
+                        .collect(Collectors.toSet()),
+                snapshot.getTimesheets().stream()
+                        .map(Timesheet::restore)
+                        .collect(Collectors.toSet())
+        );
+    }
+
     static Hotel create(HotelId hotelId, String name, Set<Room> rooms) {
         if (rooms.isEmpty()) {
             throw new IllegalArgumentException("Cannot create Hotel without rooms");
         }
+        if (rooms.size() != rooms.stream().map(room -> room.getSnapshot().getNumber()).collect(Collectors.toSet()).size()) {
+            throw new IllegalArgumentException("Rooms numbers must be unique");
+        }
         return new Hotel(hotelId, name, rooms);
     }
-
     private final HotelId hotelId;
     private final String name;
     private final Set<Room> rooms = new HashSet<>();
@@ -32,6 +48,13 @@ public class Hotel {
         this.hotelId = hotelId;
         this.name = name;
         this.rooms.addAll(rooms);
+    }
+
+    private Hotel(HotelId hotelId, String name, Set<Room> rooms, Set<Timesheet> timesheets) {
+        this.hotelId = hotelId;
+        this.name = name;
+        this.rooms.addAll(rooms);
+        this.timesheets.addAll(timesheets);
     }
 
     ReservationResponse reserveRooms(ReserveRoomCommand reserveRoomCommands) {
@@ -67,7 +90,7 @@ public class Hotel {
                 if (timesheet.getStatus() != RoomStatus.RESERVED) {
                     throw new IllegalArgumentException("Cannot Book not Reserved room");
                 }
-                if (!timesheet.getOwnerId().equals(ownerId)) {
+                if (!timesheet.getCustomerId().equals(ownerId)) {
                     throw new IllegalArgumentException("Only owner can book reserved rooms");
                 }
                 timesheet.setStatus(RoomStatus.BOOKED);
@@ -83,7 +106,7 @@ public class Hotel {
         timesheetIds.forEach(id -> {
             Timesheet timesheet = timesheetMap.get(id);
             if (timesheet != null) {
-                if (!timesheet.getOwnerId().equals(ownerId)) {
+                if (!timesheet.getCustomerId().equals(ownerId)) {
                     throw new IllegalArgumentException("Only owner can book reserved rooms");
                 }
                 timesheets.remove(timesheet);
@@ -117,7 +140,7 @@ public class Hotel {
 
     private Room findRoom(RoomId roomId) {
         return rooms.stream()
-                .filter(room -> room.getRoomId().equals(roomId))
+                .filter(room -> room.getSnapshot().getRoomId().equals(roomId))
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("Cannot find room with id: " + roomId.getId().toString()));
     }
@@ -126,6 +149,15 @@ public class Hotel {
         return timesheets.stream().anyMatch(timesheet ->
                 timesheet.getBookingPeriod().isInRange(bookingPeriod.getFrom()) ||
                 timesheet.getBookingPeriod().isInRange(bookingPeriod.getTo())
+        );
+    }
+
+    public HotelSnapshot getSnapshot() {
+        return new HotelSnapshot(
+                hotelId,
+                name,
+                rooms.stream().map(Room::getSnapshot).collect(Collectors.toSet()),
+                timesheets.stream().map(Timesheet::getSnapshot).collect(Collectors.toSet())
         );
     }
 }
