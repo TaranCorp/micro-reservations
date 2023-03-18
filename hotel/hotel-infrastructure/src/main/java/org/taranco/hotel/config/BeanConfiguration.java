@@ -16,6 +16,7 @@ import org.taranco.hotel.port.input.HotelApplicationService;
 import org.taranco.hotel.port.input.RoomBookingRequestListener;
 import org.taranco.hotel.port.input.RoomReservationRequestListener;
 import org.taranco.hotel.port.output.HotelRepository;
+import org.taranco.hotel.port.output.ReservedRoomsResponsePublisher;
 
 @Configuration
 class BeanConfiguration {
@@ -27,18 +28,18 @@ class BeanConfiguration {
     private String reservationResponseTopic;
 
     @Bean
-    HotelApplicationService hotelApplicationService(HotelRepository hotelRepository) {
-        return new HotelApplicationServiceImpl(hotelRepository, null, null, null);
+    HotelApplicationService hotelApplicationService(HotelRepository hotelRepository, ReservedRoomsResponsePublisher reservedRoomsResponsePublisher) {
+        return new HotelApplicationServiceImpl(hotelRepository, reservedRoomsResponsePublisher, null, null);
     }
 
     @Bean
-    RoomBookingRequestListener roomBookingRequestListener(HotelRepository hotelRepository) {
-        return new RoomBookingRequestListenerImpl(hotelApplicationService(hotelRepository));
+    RoomBookingRequestListener roomBookingRequestListener(HotelRepository hotelRepository, ReservedRoomsResponsePublisher reservedRoomsResponsePublisher) {
+        return new RoomBookingRequestListenerImpl(hotelApplicationService(hotelRepository, reservedRoomsResponsePublisher));
     }
 
     @Bean
-    RoomReservationRequestListener roomReservationRequestListener(HotelRepository hotelRepository) {
-        return new RoomReservationRequestListenerImpl(hotelApplicationService(hotelRepository));
+    RoomReservationRequestListener roomReservationRequestListener(HotelRepository hotelRepository, ReservedRoomsResponsePublisher reservedRoomsResponsePublisher) {
+        return new RoomReservationRequestListenerImpl(hotelApplicationService(hotelRepository, reservedRoomsResponsePublisher));
     }
 
     @Bean

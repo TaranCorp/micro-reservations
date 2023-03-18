@@ -39,6 +39,7 @@ public class Hotel {
         }
         return new Hotel(hotelId, name, rooms);
     }
+
     private final HotelId hotelId;
     private final String name;
     private final Set<Room> rooms = new HashSet<>();

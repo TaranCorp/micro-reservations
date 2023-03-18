@@ -4,6 +4,7 @@ import org.taranco.BookingId;
 import org.taranco.HotelId;
 import org.taranco.hotel.port.input.HotelApplicationService;
 import org.taranco.hotel.port.input.RoomReservationRequestListener;
+import org.taranco.hotel.port.output.ReservedRoomsResponsePublisher;
 import org.taranco.hotel.vo.ReserveRoomCommand;
 
 public class RoomReservationRequestListenerImpl implements RoomReservationRequestListener {

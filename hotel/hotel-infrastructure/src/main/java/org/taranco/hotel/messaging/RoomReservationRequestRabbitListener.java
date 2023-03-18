@@ -23,6 +23,8 @@ class RoomReservationRequestRabbitListener {
 
     @RabbitListener(queues = "${topics.reservation.request}")
     void handleReservationRequests(BookingCreatedEvent bookingCreatedEvent) {
+        log.info("Start processing of BookingCreatedEvent for booking id: " + bookingCreatedEvent.getBookingId().getId().toString());
+
         try {
             roomReservationRequestListener.reserveRooms(
                     new ReserveRoomCommand(
